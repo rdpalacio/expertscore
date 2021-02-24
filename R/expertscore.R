@@ -32,16 +32,16 @@
 
 expertscore <-
 function(expertmap, probsurface, studyarea) {
-	# check expertmap and studyarea are valid SpatialPolygon*
+	# check expertmap and studyarea are simple features (sf)*
 	# check all three data have the projection
 	# check expertmap is contained fully within studyarea
 	
 	# rasterize and clip expert map to the extent of studyarea
-	rl.expert <- rasterize(expertmap, probsurface, background=0, field=1)
+	rl.expert <- fasterize(expertmap, probsurface, background=0)
 	rl.expert <- mask(rl.expert, studyarea)
 	
 	# rasterize the study area
-	rl.S <- rasterize(mystudyarea, probsurface, background=0)
+	rl.S <- fasterize(mystudyarea, probsurface, background=NA)
 	rl.S <- mask(rl.S, studyarea)
 	
 	# probability in all pixels of continuous surface in the extent of study area
